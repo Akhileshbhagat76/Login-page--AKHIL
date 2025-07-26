@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page 3D</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .welcome-section {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b04ab542-c964-4451-91f0-94d943ca84de.png') center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .welcome-content {
+            max-width: 500px;
+            text-align: center;
+            transform: perspective(1000px);
+            transform-style: preserve-3d;
+        }
+
+        .welcome-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transform: translateZ(50px);
+        }
+
+        .welcome-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            transform: translateZ(30px);
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            perspective: 1000px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            width: 150px;
+            text-align: center;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+        }
+
+        .feature-card:hover {
+            transform: rotateY(10deg) translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .login-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-color: white;
+        }
+
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            transform: perspective(1000px);
+            transform-style: preserve-3d;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            transform: translateZ(50px);
+        }
+
+        .login-header h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #6c757d;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            transform-style: preserve-3d;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 500;
+            transform: translateZ(20px);
+        }
+
+        .input-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            transform: translateZ(10px);
+        }
+
+        .input-wrapper .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper .password-toggle:hover {
+            color: var(--primary);
+            transform: translateY(-50%) translateZ(10px);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            transform-style: preserve-3d;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            transform: translateZ(20px);
+        }
+
+        .remember-me input {
+            margin-right: 0.5rem;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary);
+            transform: translateZ(30px);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+
+        .login-btn:hover {
+            transform: translateZ(20px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .login-divider {
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            color: #6c757d;
+            transform-style: preserve-3d;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #e9ecef;
+        }
+
+        .login-divider::before {
+            left: 0;
+        }
+
+        .login-divider::after {
+            right: 0;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            transform-style: preserve-3d;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            border: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateZ(0);
+        }
+
+        .social-btn:hover {
+            transform: translateZ(20px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-btn i {
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #6c757d;
+            transform-style: preserve-3d;
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+
+        .signup-link a:hover {
+            color: var(--secondary);
+            transform: translateZ(30px);
+        }
+
+        /* 3D Floating Animation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateZ(0);
+            }
+
+            50% {
+                transform: translateY(-20px) translateZ(20px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .welcome-section {
+                padding: 3rem 1rem;
+            }
+
+            .login-section {
+                padding: 2rem 1rem;
+            }
+
+            .welcome-content {
+                max-width: 100%;
+            }
+        }
+
+        /* Demo image for branding */
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            transform-style: preserve-3d;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <section class="welcome-section">
+            <div class="brand-logo floating">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/76fb1ee2-e6cf-4c44-bc49-ebac6172f76b.png"
+                    alt="Modern abstract company logo with gradient blue colors and geometric shapes">
+            </div>
+            <div class="welcome-content">
+                <h1>Welcome Back!</h1>
+                <p>We're excited to have you back. Access your personalized dashboard and continue your journey with us.
+                    Our platform offers powerful tools to help you achieve your goals.</p>
+
+                <div class="features">
+                    <div class="feature-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Fast</h3>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Secure</h3>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Powerful</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-section">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2>Sign In</h2>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                            <span class="password-toggle" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">Sign In</button>
+
+                    <div class="login-divider">
+                        or continue with
+                    </div>
+
+                    <div class="social-login">
+                        <div class="social-btn">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-btn">
+                            <i class="fab fa-apple"></i>
+                        </div>
+                    </div>
+
+                    <p class="signup-link">
+                        Don't have an account? <a href="#">Sign up</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Password toggle visibility
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        });
+
+        // Form validation
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Basic validation
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Here you would typically send the data to a server
+            console.log('Login submitted:', { email, password });
+
+            // Simulate successful login
+            alert('Login successful! Redirecting to dashboard...');
+
+            // In a real app, you would redirect here
+            // window.location.href = '/dashboard';
+        });
+
+        // 3D hover effect for form elements
+        const formGroups = document.querySelectorAll('.form-group');
+
+        formGroups.forEach(group => {
+            const input = group.querySelector('input');
+
+            if (input) {
+                input.addEventListener('focus', () => {
+                    group.style.transform = 'translateZ(20px)';
+                });
+
+                input.addEventListener('blur', () => {
+                    group.style.transform = 'translateZ(0)';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
